@@ -1,6 +1,14 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\Summary_tepat_waktu;
+use App\Models\Jt14h;
+use App\Models\Jtw14h;
+use App\Models\Rikjalan;
+use App\Models\Lhpnow;
+use App\Models\Konversi;
+use App\Models\Summary_skp;
+
 
 use Illuminate\Http\Request;
 
@@ -13,7 +21,15 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $tepat = Summary_tepat_waktu::all();
+        $jt14h = Jt14h::count();
+        $jtw14h = Jtw14h::count();
+        $rikjalan = Rikjalan::count();
+        $jml_lhp = Lhpnow::count();
+        $tot_konversi = Konversi::sum('konversi');
+        $tot_skpkb = Summary_skp::sum('skpkb');
+        // echo $tot_skpkb;
+        return view('home', compact('tepat','jt14h','jtw14h','rikjalan', 'jml_lhp', 'tot_konversi','tot_skpkb'));
     }
 
     /**
